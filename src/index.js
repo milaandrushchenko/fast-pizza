@@ -67,3 +67,44 @@ class DateProcessor {
     return day === 0 || day === 6;
   }
 }
+
+// For s = "Look at this example of a correct text", l = 5 and r = 15,
+
+// the output should be true.
+
+// We can replace 13th and 26th characters with '\n', and obtain the following multiline text of width 12:
+
+// Look at this
+// example of a
+// correct text
+
+function beautifulText(s, l, r) {
+  const spaces = [];
+
+  s.split('').forEach((char, index) => {
+    if (char === ' ') spaces.push(index);
+  });
+
+  for (const spaceIndex of spaces) {
+    const width = spaceIndex;
+
+    if (width < l || width > r) continue;
+
+    let valid = true;
+
+    for (let i = width; i < s.length - 1; i += width + 1) {
+      if (s[i] !== ' ') {
+        valid = false;
+        break;
+      }
+    }
+
+    if (valid && (s.length + 1) % (width + 1) === 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+console.log(beautifulText('Look at this example of a correct text', 5, 15));
